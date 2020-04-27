@@ -27,6 +27,7 @@ public class TableroUIPrueba extends JFrame {
 	private TableroUI tableroUI;
 	private TableroUIInfo tableroUIInfo;
 	private Juego juego = new Juego(6, 12);
+
 	/**
 	 * Launch the application.
 	 */
@@ -48,8 +49,8 @@ public class TableroUIPrueba extends JFrame {
 	 */
 	public TableroUIPrueba() {
 //		Para probar
-		LinkedList<Soldado> soldados = new LinkedList<Soldado>();
-		soldados.add(new Soldado(Especialidad.ligera));
+//		LinkedList<Soldado> soldados = new LinkedList<Soldado>();
+//		soldados.add(new Soldado(Especialidad.ligera));
 //		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -63,7 +64,7 @@ public class TableroUIPrueba extends JFrame {
 				super.mouseClicked(e);
 				JPanel panel = (JPanel) e.getSource();
 				Coordenada coordenada = conseguirCoord(panel.getName());
-				getTablero().insertar(new Batallon(4, Tipo.infanteria, soldados, Color.BLACK), coordenada);
+				getTablero().insertar(new Batallon(4, Tipo.infanteria, juego.getSoldados(), Color.BLACK), coordenada);
 				tableroUI.actualizarTablero(tableroUIInfo);
 				// Por esta razon el mouseAdapter tiene que ser una propiedad del tableroui
 //				tableroUI.actualizarTablero(mouseAdapter);
@@ -72,15 +73,16 @@ public class TableroUIPrueba extends JFrame {
 
 			private Coordenada conseguirCoord(String name) {
 				int coordX = Integer.valueOf(name.substring(0, name.indexOf("_")));
-				int coordY = Integer.valueOf(name.substring(name.indexOf("_")+1));
+				int coordY = Integer.valueOf(name.substring(name.indexOf("_") + 1));
 				return new Coordenada(coordX, coordY);
 			}
 		};
-		tableroUIInfo=new TableroUIInfo(getTablero());
-		tableroUI = new TableroUI(getTablero().getAncho(), getTablero().getAlto(), mouseAdapter,tableroUIInfo);
+		tableroUIInfo = new TableroUIInfo(getTablero());
+		tableroUI = new TableroUI(getTablero().getAncho(), getTablero().getAlto(), mouseAdapter, tableroUIInfo);
 		contentPane.add(tableroUI, BorderLayout.CENTER);
 		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
+
 	public Tablero getTablero() {
 		return juego.getTablero();
 	}
