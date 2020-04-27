@@ -10,4 +10,8 @@ public class Juego {
 		tablero=new Tablero(ancho, alto);
 	}
 
+	public Tablero getTablero() {
+		return tablero;
+	}
+
 }

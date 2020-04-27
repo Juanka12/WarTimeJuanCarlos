@@ -49,8 +49,8 @@ public class Generador {
 		if(casilla!=null) {
 			Batallon batallon=(Batallon)casilla;
 			//TODO cambiar cuando el batallon tenga todos los valores para la ficha
-			fichaInfo=new FichaInfo("/Imagenes/ligera.png", -1, batallon.getId(), -1,
-					-1, -1, -1, batallon.getMaximoSoldados(), false, Color.BLACK);
+			fichaInfo=new FichaInfo("/Imagenes/ligera.png", -1, batallon.getId(), batallon.getExperience(),
+					batallon.getAttack(), batallon.getDefence(), batallon.getStamina(), batallon.getCantidadSoldados(), false, Color.BLACK);
 		}
 		return fichaInfo;
 	}

@@ -24,4 +24,12 @@ public class Tablero {
 	public void insertar(Casilla casilla,Coordenada coordenada) {
 		casillas.insertElement(coordenada, casilla);
 	}
+
+	public int getAncho() {
+		return ancho;
+	}
+
+	public int getAlto() {
+		return alto;
+	}
 }

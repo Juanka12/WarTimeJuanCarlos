@@ -5,13 +5,17 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import control.Juego;
 import modelo.Batallon;
 import modelo.Coordenada;
+import modelo.Especialidad;
+import modelo.Soldado;
 import modelo.Tablero;
 import modelo.Tipo;
 import vista.TableroUI;
@@ -21,6 +25,8 @@ public class TableroUIPrueba extends JFrame {
 
 	private JPanel contentPane;
 	private TableroUI tableroUI;
+	private TableroUIInfo tableroUIInfo;
+	private Juego juego = new Juego(6, 12);
 	/**
 	 * Launch the application.
 	 */
@@ -41,6 +47,10 @@ public class TableroUIPrueba extends JFrame {
 	 * Create the frame.
 	 */
 	public TableroUIPrueba() {
+//		Para probar
+		LinkedList<Soldado> soldados = new LinkedList<Soldado>();
+		soldados.add(new Soldado(Especialidad.ligera));
+//		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,18 +62,26 @@ public class TableroUIPrueba extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
 				JPanel panel = (JPanel) e.getSource();
-				panel.setBackground(Color.YELLOW);
+				Coordenada coordenada = conseguirCoord(panel.getName());
+				getTablero().insertar(new Batallon(4, Tipo.infanteria, soldados, Color.BLACK), coordenada);
+				tableroUI.actualizarTablero(tableroUIInfo);
 				// Por esta razon el mouseAdapter tiene que ser una propiedad del tableroui
 //				tableroUI.actualizarTablero(mouseAdapter);
 //				tableroUI.actualizarTablero();
 			}
+
+			private Coordenada conseguirCoord(String name) {
+				int coordX = Integer.valueOf(name.substring(0, name.indexOf("_")));
+				int coordY = Integer.valueOf(name.substring(name.indexOf("_")+1));
+				return new Coordenada(coordX, coordY);
+			}
 		};
-		Tablero tablero=new Tablero(6, 12);
-		tablero.insertar(new Batallon(4, Tipo.infanteria), new Coordenada(4, 4));
-		TableroUIInfo tableroUIInfo=new TableroUIInfo(tablero);
-		tableroUI = new TableroUI(6, 12, mouseAdapter,tableroUIInfo);
+		tableroUIInfo=new TableroUIInfo(getTablero());
+		tableroUI = new TableroUI(getTablero().getAncho(), getTablero().getAlto(), mouseAdapter,tableroUIInfo);
 		contentPane.add(tableroUI, BorderLayout.CENTER);
 		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
-
+	public Tablero getTablero() {
+		return juego.getTablero();
+	}
 }
