@@ -10,11 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import control.PobladorController;
+import control.Controller;
 import modelo.Ejercito;
 import vista.BordeArmada;
 import vista.MercadoSoldadoDialog;
-import vista.MercadoSoldados;
 import vista.Conversores.Generador;
 
 public class BodeArmadaPrueba extends JFrame {
@@ -22,7 +21,7 @@ public class BodeArmadaPrueba extends JFrame {
 	private JPanel contentPane;
 	private Ejercito ejercito;
 	private MercadoSoldadoDialog mercadoSoldado;
-	PobladorController pobladorController;
+	Controller controller;
 
 	/**
 	 * Launch the application.
@@ -62,7 +61,7 @@ public class BodeArmadaPrueba extends JFrame {
 				mercadoSoldado = new MercadoSoldadoDialog(
 						Generador.getMercadoSoldadoInfo(ejercito.getBatallonActual()));
 				mercadoSoldado.setVisible(true);
-				pobladorController=new PobladorController(ejercito.getBatallonActual());
+				controller=new Controller(ejercito.getBatallonActual());
 				mercadoSoldado.getBtnOk().addActionListener(new ActionListener() {
 
 					@Override
@@ -70,7 +69,7 @@ public class BodeArmadaPrueba extends JFrame {
 //						MercadoSoldadoDialog dialogo=(MercadoSoldadoDialog)e.getSource();
 						if (mercadoSoldado.compruebaMax()) {
 							// aqui es donde hay que conectar con el modelo de datos
-							pobladorController.poblarBatallon(mercadoSoldado.getListaEjercito());
+							controller.poblarBatallon(mercadoSoldado.getListaEjercito());
 						}
 						dispose();
 					}
