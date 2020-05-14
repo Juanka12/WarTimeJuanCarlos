@@ -22,6 +22,7 @@ public class Juego {
 	private Error errorActualError = null;
 	private Batallon batallonAMover = null;
 	private int movimientos = 0;
+	private Coordenada origenTemp;
 
 	public boolean isLocalizarEstado() {
 		return localizarEstado;
@@ -51,13 +52,14 @@ public class Juego {
 		if (mover && batallonAMover == null) {
 			batallonAMover = (Batallon) casilla;
 			getTablero().borrar(casilla);
+			this.origenTemp = coordenada;
 		}
 		return mover;
 	}
 
 	public boolean moverAdonde(Coordenada coordenada) {
 		boolean insertar = comprobarLocalizacion(coordenada);
-		if (insertar) {
+		if (insertar&&comprobarPasos(coordenada)) {
 			insertar = tablero.insertar(batallonAMover, coordenada);
 			if (insertar) {
 				batallonAMover = null;
@@ -69,6 +71,15 @@ public class Juego {
 			}
 		}
 		return insertar;
+	}
+	
+	private boolean comprobarPasos(Coordenada destino) {
+		int maxY = this.origenTemp.getY()+batallonAMover.getSteps();
+		int maxX = this.origenTemp.getX()+batallonAMover.getSteps();
+		if (destino.getX()<=maxX && destino.getY()<=maxY) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean comprobarBatallon(Casilla casilla) {

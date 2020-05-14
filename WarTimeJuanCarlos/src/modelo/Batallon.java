@@ -44,6 +44,9 @@ public class Batallon implements Casilla{
 		return soldados.size();
 	}
 
+	public int getSteps() {
+		return tipo.getSteps();
+	}
 
 	public boolean alistarSoldado(Soldado soldado) {
 //		//programacion por contrato
