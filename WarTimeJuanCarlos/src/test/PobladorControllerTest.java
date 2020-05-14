@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import control.Controller;
 import modelo.Batallon;
 import modelo.Especialidad;
 import modelo.Tipo;
+import older.PobladorController;
 import vista.info.EspecificacionSoldadosInfo;
 
 class PobladorControllerTest {
@@ -17,23 +17,23 @@ class PobladorControllerTest {
 	@Test
 	void testPoblarBatallon() {
 		Batallon batallon = new Batallon(1, Tipo.arqueria);
-		Controller controller=new Controller(batallon);
+		PobladorController pobladorController=new PobladorController(batallon);
 		Especialidad especialidades[]= {Especialidad.arco,Especialidad.ballesta};
 		int mitad=5;
 		ArrayList<EspecificacionSoldadosInfo> lista=new ArrayList<EspecificacionSoldadosInfo>();
 		for (int i = 0; i < especialidades.length; i++) {
 			lista.add(new EspecificacionSoldadosInfo(especialidades[i].toString(), mitad));
 		}
-		controller.poblarBatallon(lista);
+		pobladorController.poblarBatallon(lista);
 		int max=10;
-		assertEquals(max, controller.getBatallon().getCantidadSoldados());
+		assertEquals(max, pobladorController.getBatallon().getCantidadSoldados());
 	}
 	
 	// si fuera programacion defensiva
 	@Test
 	void testPoblarBatallonDos() {
 		Batallon batallon = new Batallon(1, Tipo.arqueria);
-		Controller pobladorController=new Controller(batallon);
+		PobladorController pobladorController=new PobladorController(batallon);
 		Especialidad especialidades[]= {Especialidad.arco,Especialidad.ballesta};
 		int fraccion=4;
 		ArrayList<EspecificacionSoldadosInfo> lista=new ArrayList<EspecificacionSoldadosInfo>();

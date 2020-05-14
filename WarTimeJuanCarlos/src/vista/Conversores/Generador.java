@@ -10,27 +10,32 @@ import javax.swing.JPanel;
 import control.Juego;
 import modelo.Batallon;
 import modelo.Casilla;
+import modelo.Castillo;
 import modelo.Coordenada;
 import modelo.Ejercito;
 import modelo.Especialidad;
 import modelo.Tablero;
 import modelo.Tipo;
 import vista.EspecialidadSoldado;
-import vista.Ficha;
+import vista.FichaBatallon;
 import vista.FichaBlanca;
 import vista.info.EjercitoInfo;
 import vista.info.EspecialidadSoldadoInfo;
+import vista.info.FichaBatallonInfo;
+import vista.info.FichaBlancaInfo;
+import vista.info.FichaCastilloInfo;
 import vista.info.FichaInfo;
 import vista.info.MercadoSoldadoInfo;
 import vista.info.TableroUIInfo;
 
 public class Generador {
 
-	public static ArrayList<EspecialidadSoldado> getEspecialidades(Tipo tipo,FocusAdapter focusAdapter) {
-		ArrayList<EspecialidadSoldado> panelesEspecialidadSoldadosEnsayos=new ArrayList<EspecialidadSoldado>();
+	public static ArrayList<EspecialidadSoldado> getEspecialidades(Tipo tipo, FocusAdapter focusAdapter) {
+		ArrayList<EspecialidadSoldado> panelesEspecialidadSoldadosEnsayos = new ArrayList<EspecialidadSoldado>();
 		for (Especialidad especialidad : Arrays.asList(Especialidad.values())) {
-			if(especialidad.getTipo()==tipo) {
-				panelesEspecialidadSoldadosEnsayos.add(new EspecialidadSoldado(new EspecialidadSoldadoInfo(especialidad),focusAdapter));
+			if (especialidad.getTipo() == tipo) {
+				panelesEspecialidadSoldadosEnsayos
+						.add(new EspecialidadSoldado(new EspecialidadSoldadoInfo(especialidad), focusAdapter));
 			}
 		}
 		return panelesEspecialidadSoldadosEnsayos;
@@ -45,19 +50,6 @@ public class Generador {
 				ejercito.getInfanteria(), ejercito.getCaballeria(), ejercito.getArqueria());
 	}
 
-	public static FichaInfo getFichaInfo(Tablero tablero, Coordenada coordenada) {
-		Casilla casilla = tablero.getCasilla(coordenada);
-		FichaInfo fichaInfo=null;
-		if(casilla!=null) {
-			Batallon batallon=(Batallon)casilla;
-			//TODO cambiar cuando el batallon tenga todos los valores para la ficha
-			fichaInfo=new FichaInfo("/Imagenes/ligera.png", -1, batallon.getId(), -1,
-					-1, -1, -1, batallon.getMaximoSoldados(), false, Color.BLACK);
-		}
-		return fichaInfo;
-	}
 	
-	public static TableroUIInfo getTableroUIInfo(Juego juego) {
-		return new TableroUIInfo(juego.getTablero());
-	}
+	
 }

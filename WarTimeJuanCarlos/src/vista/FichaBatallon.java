@@ -13,9 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import vista.info.FichaInfo;
+import vista.info.FichaBatallonInfo;
 
-public class Ficha extends JPanel {
+public class FichaBatallon extends JPanel {
 	private JTextField txtColorEnemy;
 	private JTextField txtColorArmy;
 	private JLabel lblExperience;
@@ -29,7 +29,7 @@ public class Ficha extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Ficha(FichaInfo information) {
+	public FichaBatallon(FichaBatallonInfo ficha) {
 		int mediaFont=14,bigFont=20;
 		int columns=3;
 		setBorder(new LineBorder(new Color(0, 0, 0), 3));
@@ -140,22 +140,22 @@ public class Ficha extends JPanel {
 		lblIcono.setHorizontalTextPosition(SwingConstants.CENTER);
 		info.add(lblIcono, BorderLayout.CENTER);
 		
-		paintValues(information);		 
+		paintValues(ficha);		 
 		
 	}
 
-	private void paintValues(FichaInfo information) {
-		ImageIcon sonidoEncendido = new ImageIcon(Ficha.class.getResource(information.getIcon()));
+	private void paintValues(FichaBatallonInfo ficha) {
+		ImageIcon sonidoEncendido = new ImageIcon(FichaBatallon.class.getResource(ficha.getIcon()));
 		 ImageIcon sonidoEscalaOn = new ImageIcon(sonidoEncendido.getImage().getScaledInstance(100, 100,
 				Image.SCALE_SMOOTH));		 
-		 txtColorArmy.setBackground(information.getColorArmy());
-		 txtColorEnemy.setBackground(information.getColorEnemy());
-		 lblAttack.setText(String.valueOf(information.getAttack()));
-		 lblDefence.setText(String.valueOf(information.getDefence()));
-		 lblExperience.setText(String.valueOf(information.getExperience()));
-		 lblHeroe.setText(Character.toString(information.getHeroe()));
-		 lblStamina.setText(String.valueOf(information.getStamina()));
-		 lblUnits.setText(String.valueOf(information.getUnits()));
+		 txtColorArmy.setBackground(ficha.getColorArmy());
+		 txtColorEnemy.setBackground(ficha.getColorEnemy());
+//		 lblAttack.setText(String.valueOf(information.getAttack()));
+//		 lblDefence.setText(String.valueOf(information.getDefence()));
+//		 lblExperience.setText(String.valueOf(information.getExperience()));
+//		 lblHeroe.setText(Character.toString(information.getHeroe()));
+//		 lblStamina.setText(String.valueOf(information.getStamina()));
+//		 lblUnits.setText(String.valueOf(information.getUnits()));
 		 lblIcono.setIcon(sonidoEscalaOn);		
 	}
 

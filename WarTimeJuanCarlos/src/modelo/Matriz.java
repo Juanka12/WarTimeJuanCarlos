@@ -28,6 +28,14 @@ public class Matriz<K, E> {
 		return reverse.get(element);
 	}
 
+	//las clases parametrizadas no permiten la sobrecarga de tipos parametrizados 
+//	public boolean contiene(E e) {
+//		return getClave(e)!=null;
+//	}
+//
+//	public boolean contiene(K k) {
+//		return getElement(k)!=null;
+//	}
 	public boolean contieneElemento(E e) {
 		return getClave(e)!=null;
 	}
@@ -35,4 +43,11 @@ public class Matriz<K, E> {
 	public boolean contieneClave(K k) {
 		return getElement(k)!=null;
 	}
+
+	public boolean borrar(E casilla) {
+		E remove = elements.remove(reverse.remove(casilla));
+		return remove!=null;
+	}
+	
+
 }

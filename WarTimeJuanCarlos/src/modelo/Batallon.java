@@ -3,56 +3,16 @@ package modelo;
 import java.awt.Color;
 import java.util.LinkedList;
 
+import vista.info.FichaBatallonFactory;
+import vista.info.FichaBatallonInfo;
+import vista.info.FichaInfo;
+
 public class Batallon implements Casilla{
 	private int id;
 	private final int maximoSoldados = 10;
 	private Tipo tipo;
 	private LinkedList<Soldado> soldados = new LinkedList<Soldado>();
 	private Color colorAtacante;
-	private int experience;
-	private int attack;
-	private int defence;
-	private int stamina;
-
-	public int getExperience() {
-		int totalExp = 0;
-		for (Soldado soldado : soldados) {
-			totalExp += soldado.getExperience();
-		}
-		this.experience = totalExp;
-		return this.experience;
-	}
-
-
-	public int getAttack() {
-		int totalAtt = 0;
-		for (Soldado soldado : soldados) {
-			totalAtt += soldado.getAttack();
-		}
-		this.attack = totalAtt;
-		return this.attack;
-	}
-
-
-	public int getDefence() {
-		int totalDef = 0;
-		for (Soldado soldado : soldados) {
-			totalDef += soldado.getDefence();
-		}
-		this.defence = totalDef;
-		return this.defence;
-	}
-
-
-	public int getStamina() {
-		int totalSta = 0;
-		for (Soldado soldado : soldados) {
-			totalSta += soldado.getStamina();
-		}
-		this.stamina = totalSta;
-		return this.stamina;
-	}
-
 
 	public Batallon(int id, Tipo tipo) {
 		super();
@@ -63,7 +23,6 @@ public class Batallon implements Casilla{
 	
 	public Batallon(int id, Tipo tipo, LinkedList<Soldado> soldados, Color colorEjercitoAtacante) {
 		this(id,tipo);
-		this.soldados = soldados;
 		this.colorAtacante = colorEjercitoAtacante;
 	}
 
@@ -96,6 +55,12 @@ public class Batallon implements Casilla{
 //			response = soldados.add(soldado);
 //		}
 //		return response;
+	}
+
+
+	@Override
+	public FichaInfo getInfo(Ejercito ejercito) {
+		return new FichaBatallonFactory(new FichaBatallonInfo(ejercito.getIcon(), ejercito.getId(),getId(),0,0,0,0,0,false,ejercito.getColor()));		
 	}
 
 }

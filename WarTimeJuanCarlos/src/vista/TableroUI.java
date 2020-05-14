@@ -6,8 +6,6 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import modelo.Coordenada;
-import modelo.Tablero;
 import utiles.Utiles;
 import vista.info.FichaInfo;
 import vista.info.TableroUIInfo;
@@ -23,13 +21,13 @@ public class TableroUI extends JPanel {
 	 */
 	public TableroUI(int ancho, int alto) {
 		super();
-		fichas = new JPanel[ancho][alto];
+		fichas = new JPanel[alto][ancho];
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(new GridLayout(ancho, alto, 0, 0));
+		setLayout(new GridLayout(alto, ancho, 0, 0));
 	}
 
 	public void setMouseAdapter(MouseAdapter mouseAdapter) {
-		this.mouseAdapter = mouseAdapter;	
+		this.mouseAdapter = mouseAdapter;
 	}
 
 	public void actualizarTablero(TableroUIInfo tableroUIInfo) {
@@ -45,11 +43,8 @@ public class TableroUI extends JPanel {
 		}
 		revalidate();
 	}
-	
-	public  JPanel getFicha(FichaInfo fichaInfo) {
-		if(fichaInfo==null) {
-			return new FichaBlanca();
-		}
-		return new Ficha(fichaInfo);
+
+	public JPanel getFicha(FichaInfo fichaInfo) {
+		return fichaInfo.getPanel();
 	}
 }

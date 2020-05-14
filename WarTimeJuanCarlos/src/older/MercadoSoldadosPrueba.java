@@ -1,4 +1,4 @@
-package pruebasui;
+package older;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,17 +9,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import control.Controller;
 import modelo.Batallon;
 import modelo.Tipo;
 import vista.MercadoSoldadoDialog;
 import vista.Conversores.Generador;
+import vista.info.MercadoSoldadoInfo;
 
 public class MercadoSoldadosPrueba extends JFrame {
 
 	private JPanel contentPane;
 	MercadoSoldadoDialog mercadoSoldadoDialog;
-	Controller controller;
+	PobladorController pobladorController;
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +53,7 @@ public class MercadoSoldadosPrueba extends JFrame {
 		});
 		getContentPane().add(btnDialogo, BorderLayout.CENTER);
 		//Esto va a aconectar el ui con el modelo de datos
-		controller=new Controller(new Batallon(1, Tipo.arqueria));
+		pobladorController=new PobladorController(new Batallon(1, Tipo.arqueria));
 		getBtnOk().addActionListener(new ActionListener() {
 			
 			@Override
@@ -61,7 +61,7 @@ public class MercadoSoldadosPrueba extends JFrame {
 //				MercadoSoldadoDialog dialogo=(MercadoSoldadoDialog)e.getSource();
 				if(mercadoSoldadoDialog.compruebaMax()) {
 					//aqui es donde hay que conectar con el modelo de datos
-					controller.poblarBatallon(mercadoSoldadoDialog.getListaEjercito());
+					pobladorController.poblarBatallon(mercadoSoldadoDialog.getListaEspecificacion());
 				}
 				dispose();
 			}
