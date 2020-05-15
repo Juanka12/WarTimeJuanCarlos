@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Test;
 class UtilesTest {
 
 	@Test
-	void testGetAleatorioSesgadoSinSesgo() {
+	void testGetAleatorioSesgado() {
+		int caras = 6;
+		int mod = 0;
 		int min=1,max=6;
 		boolean tocadoMin=false,tocadoMax=false;
 		for (int i = 0; i < 100; i++) {
-			int aleatorioSesgado = Utiles.getAleatorioSesgado(min, max, 0);
+			int aleatorioSesgado = Utiles.dadoConSesgo(caras, mod);
 			assertTrue(aleatorioSesgado>=1&&aleatorioSesgado<=6);
 			if(aleatorioSesgado==min) tocadoMin=true;
 			if(aleatorioSesgado==max) tocadoMax=true;
