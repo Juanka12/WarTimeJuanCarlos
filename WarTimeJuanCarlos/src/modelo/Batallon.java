@@ -39,6 +39,10 @@ public class Batallon implements Casilla {
 	public int getSteps() {
 		return tipo.getStep();
 	}
+	
+	public Rango getRango() {
+		return tipo.getRango();
+	}
 
 	public Integer getCantidadSoldados() {
 		return soldados.size();

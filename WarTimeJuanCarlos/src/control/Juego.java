@@ -58,25 +58,50 @@ public class Juego {
 
 	public boolean moverAdonde(Coordenada coordenada) {
 		boolean insertar = comprobarPasos(coordenada);
-		if (insertar) {
+		boolean pelear = comprobarRango(coordenada);
+		Casilla casilla = getTablero().getCasilla(coordenada);
+		if (comprobarBatallonEnemigo(casilla) && pelear) {
+			System.out.println("pelea");
+		} else if (insertar) {
 			insertar = tablero.insertar(batallonAMover, coordenada);
 			if (insertar) {
-				batallonAMover = null;
-				this.movimientos++;
-				if (this.movimientos == 3) {
-					setSiguienteEjercito();
-					this.movimientos = 0;
-				}
+				siguienteTurno();
 			}
 		}
 		return insertar;
 	}
-	
+
+	private void siguienteTurno() {
+		batallonAMover = null;
+		this.movimientos++;
+		if (this.movimientos == 3) {
+			setSiguienteEjercito();
+			this.movimientos = 0;
+		}
+	}
+
+	private boolean comprobarRango(Coordenada destino) {
+		if (this.origenTemp != null) {
+			int maxY = this.origenTemp.getY() + batallonAMover.getRango().getMax();
+			int maxX = this.origenTemp.getX() + batallonAMover.getRango().getMax();
+			int minY = this.origenTemp.getY() - batallonAMover.getRango().getMax();
+			int minX = this.origenTemp.getX() - batallonAMover.getRango().getMax();
+			if (destino.getX() >= minX && destino.getY() >= minY && destino.getX() <= maxX && destino.getY() <= maxY) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean comprobarPasos(Coordenada destino) {
-		int maxY = this.origenTemp.getY()+batallonAMover.getSteps();
-		int maxX = this.origenTemp.getX()+batallonAMover.getSteps();
-		if (destino.getX()<=maxX && destino.getY()<=maxY) {
-			return true;
+		if (this.origenTemp != null) {
+			int maxY = this.origenTemp.getY() + batallonAMover.getSteps();
+			int maxX = this.origenTemp.getX() + batallonAMover.getSteps();
+			int minY = this.origenTemp.getY() - batallonAMover.getSteps();
+			int minX = this.origenTemp.getX() - batallonAMover.getSteps();
+			if (destino.getX() >= minX && destino.getY() >= minY && destino.getX() <= maxX && destino.getY() <= maxY) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -84,6 +109,11 @@ public class Juego {
 	private boolean comprobarBatallon(Casilla casilla) {
 		Ejercito ejercito = ejercitos.peek();
 		return casilla instanceof Batallon && ejercito.comprobarBatallon((Batallon) casilla);
+	}
+
+	private boolean comprobarBatallonEnemigo(Casilla casilla) {
+		Ejercito ejercito = ejercitos.peek();
+		return casilla instanceof Batallon && !ejercito.comprobarBatallon((Batallon) casilla);
 	}
 
 	public boolean localizarBatallon(Coordenada coordenada) {
