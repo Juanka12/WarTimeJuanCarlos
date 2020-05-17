@@ -15,14 +15,16 @@ public class Ejercito {
 	//Esta implementacion me permite usar la coleccion como lista o cola
 	LinkedList<Batallon> batallones = new LinkedList<Batallon>();
 	
-	public boolean comprobarBatallon(Batallon batallon) {
-		return batallones.contains(batallon);
-	}
+	
 	public Ejercito(int id) {
 		super();
 		this.id = id;
 		crearEjercito();
 	}
+	public boolean comprobarBatallon(Batallon batallon) {
+		return batallones.contains(batallon);
+	}
+
 	public boolean setSiguienteBatallon() {
 		batallones.offer(batallones.poll());
 		return !batallones.peek().equals(primerBatallon);

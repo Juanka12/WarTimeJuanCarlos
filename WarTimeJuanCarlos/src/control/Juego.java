@@ -8,10 +8,9 @@ import modelo.Casilla;
 import modelo.Castillo;
 import modelo.Coordenada;
 import modelo.Ejercito;
-import modelo.Tablero;
-import vista.info.FichaInfo;
 import modelo.Error;
 import modelo.Soldado;
+import modelo.Tablero;
 
 public class Juego {
 	private Tablero tablero;
@@ -58,8 +57,8 @@ public class Juego {
 	}
 
 	public boolean moverAdonde(Coordenada coordenada) {
-		boolean insertar = comprobarLocalizacion(coordenada);
-		if (insertar&&comprobarPasos(coordenada)) {
+		boolean insertar = comprobarPasos(coordenada);
+		if (insertar) {
 			insertar = tablero.insertar(batallonAMover, coordenada);
 			if (insertar) {
 				batallonAMover = null;

@@ -1,7 +1,5 @@
 package modelo;
 
-import vista.info.FichaBatallonInfo;
-
 public class Tablero {
 	private int ancho, alto;
 	// Como tambien puede ser un castillo, habrá que remodelar esto
