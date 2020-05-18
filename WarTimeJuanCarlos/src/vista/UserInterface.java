@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import control.ComenzarController;
+import control.Controller;
 import modelo.Batallon;
 import modelo.Coordenada;
 import modelo.Tablero;
@@ -39,7 +39,7 @@ public class UserInterface extends JFrame {
 		contentPane.add(bordeArmada,BorderLayout.WEST);
 		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
-	public void crearTablero(ComenzarController comenzarController) {
+	public void crearTablero(Controller comenzarController) {
 		TableroUIInfo tableroUIInfo=new TableroUIInfo(comenzarController.getJuego());
 		tableroUI = new TableroUI(comenzarController.getAncho(), comenzarController.getAlto());
 		contentPane.add(tableroUI, BorderLayout.CENTER);

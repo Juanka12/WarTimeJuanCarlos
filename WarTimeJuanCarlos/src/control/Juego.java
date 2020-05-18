@@ -2,6 +2,7 @@ package control;
 
 import java.util.ArrayDeque;
 
+import modelo.Batalla;
 import modelo.Batallon;
 import modelo.Blanca;
 import modelo.Casilla;
@@ -12,16 +13,14 @@ import modelo.Error;
 import modelo.Soldado;
 import modelo.Tablero;
 
-public class Juego {
-	private Tablero tablero;
+public abstract class Juego {
+	protected Tablero tablero;
 	private int ancho, alto;
-	private ArrayDeque<Ejercito> ejercitos = new ArrayDeque<Ejercito>();
-	private boolean localizarEstado = true;
+	protected ArrayDeque<Ejercito> ejercitos = new ArrayDeque<Ejercito>();
+	protected boolean localizarEstado = true;
 	private Ejercito primerEjercito;
-	private Error errorActualError = null;
-	private Batallon batallonAMover = null;
-	private int movimientos = 0;
-	private Coordenada origenTemp;
+	protected Error errorActualError = null;
+	protected Batalla batallaActual;
 
 	public boolean isLocalizarEstado() {
 		return localizarEstado;
@@ -41,99 +40,32 @@ public class Juego {
 		primerEjercito = ejercitos.peek();
 	}
 
+	public Juego(Juego juego) {
+		super();
+		this.tablero = juego.tablero;
+		this.ancho = juego.ancho;
+		this.alto = juego.alto;
+		this.ejercitos = juego.ejercitos;
+		this.localizarEstado = juego.localizarEstado;
+		this.primerEjercito = juego.primerEjercito;
+		this.errorActualError = juego.errorActualError;
+	}
+
 	public Tablero getTablero() {
 		return tablero;
 	}
 
-	public boolean moverBatallon(Coordenada coordenada) {
-		Casilla casilla = getTablero().getCasilla(coordenada);
-		boolean mover = comprobarBatallon(casilla);
-		if (mover && batallonAMover == null) {
-			batallonAMover = (Batallon) casilla;
-			getTablero().borrar(casilla);
-			this.origenTemp = coordenada;
-		}
-		return mover;
-	}
-
-	public boolean moverAdonde(Coordenada coordenada) {
-		boolean insertar = comprobarPasos(coordenada);
-		boolean pelear = comprobarRango(coordenada);
-		Casilla casilla = getTablero().getCasilla(coordenada);
-		if (comprobarBatallonEnemigo(casilla) && pelear) {
-			System.out.println("pelea");
-		} else if (insertar) {
-			insertar = tablero.insertar(batallonAMover, coordenada);
-			if (insertar) {
-				siguienteTurno();
-			}
-		}
-		return insertar;
-	}
-
-	private void siguienteTurno() {
-		batallonAMover = null;
-		this.movimientos++;
-		if (this.movimientos == 3) {
-			setSiguienteEjercito();
-			this.movimientos = 0;
-		}
-	}
-
-	private boolean comprobarRango(Coordenada destino) {
-		if (this.origenTemp != null) {
-			int maxY = this.origenTemp.getY() + batallonAMover.getRango().getMax();
-			int maxX = this.origenTemp.getX() + batallonAMover.getRango().getMax();
-			int minY = this.origenTemp.getY() - batallonAMover.getRango().getMax();
-			int minX = this.origenTemp.getX() - batallonAMover.getRango().getMax();
-			if (destino.getX() >= minX && destino.getY() >= minY && destino.getX() <= maxX && destino.getY() <= maxY) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean comprobarPasos(Coordenada destino) {
-		if (this.origenTemp != null) {
-			int maxY = this.origenTemp.getY() + batallonAMover.getSteps();
-			int maxX = this.origenTemp.getX() + batallonAMover.getSteps();
-			int minY = this.origenTemp.getY() - batallonAMover.getSteps();
-			int minX = this.origenTemp.getX() - batallonAMover.getSteps();
-			if (destino.getX() >= minX && destino.getY() >= minY && destino.getX() <= maxX && destino.getY() <= maxY) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean comprobarBatallon(Casilla casilla) {
+	protected boolean comprobarBatallon(Casilla casilla) {
 		Ejercito ejercito = ejercitos.peek();
 		return casilla instanceof Batallon && ejercito.comprobarBatallon((Batallon) casilla);
 	}
 
-	private boolean comprobarBatallonEnemigo(Casilla casilla) {
+	protected boolean comprobarBatallonEnemigo(Casilla casilla) {
 		Ejercito ejercito = ejercitos.peek();
 		return casilla instanceof Batallon && !ejercito.comprobarBatallon((Batallon) casilla);
 	}
 
-	public boolean localizarBatallon(Coordenada coordenada) {
-		boolean insertar = comprobarLocalizacion(coordenada);
-		if (!insertar) {
-			errorActualError = Error.posicion;
-		} else if (localizarEstado) {
-			Ejercito ejercito = ejercitos.peek();
-			Batallon batallonActual = ejercito.getBatallonActual();
-			insertar = tablero.insertar(batallonActual, coordenada);
-			if (insertar) {
-				if (!ejercito.setSiguienteBatallon()) {
-					setSiguienteEjercito();
-				}
-			} else {
-				errorActualError = Error.ocupada;
-			}
-		}
-		return insertar && localizarEstado;
-	}
+	public abstract boolean poner(Coordenada coordenada);
 
 	public Error getErrorActual() {
 		Error response = errorActualError;
@@ -141,11 +73,11 @@ public class Juego {
 		return response;
 	}
 
-	private boolean comprobarLocalizacion(Coordenada coordenada) {
+	protected boolean comprobarLocalizacion(Coordenada coordenada) {
 		return getTablero().isEnSuMitad(getEjercitoActual(), coordenada);
 	}
 
-	private void setSiguienteEjercito() {
+	protected void setSiguienteEjercito() {
 		ejercitos.offer(ejercitos.poll());
 		if (ejercitos.peek().equals(primerEjercito)) {
 			localizarEstado = false;
@@ -181,4 +113,7 @@ public class Juego {
 		return casilla;
 	}
 
+	public void realizarBatalla() {
+		batallaActual.guerrear();
+	}
 }

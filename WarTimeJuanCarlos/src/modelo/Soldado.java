@@ -1,7 +1,6 @@
 package modelo;
 
 public class Soldado {
-	
 	private Especialidad especialidad;
 	private final int staminaMaxima=100; 
 	private int stamina=staminaMaxima;
@@ -19,6 +18,9 @@ public class Soldado {
 		return stamina;
 	}
 
+	public void infringir(float valor) {
+		stamina-=valor;
+	}
 	public Especialidad getEspecialidad() {
 		return especialidad;
 	}
@@ -32,16 +34,16 @@ public class Soldado {
 		return -1;
 	}
 
-	public void incrementarExperiencia() {
+	public void incrementarExperiencia(int valor) {
 		// TODO Auto-generated method stub
 	}
 
-	public void incrementarDefensa() {
+	public void incrementarDefensa(int valor) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void incrementaAtaque() {
+	public void incrementaAtaque(int valor) {
 		// TODO Auto-generated method stub
 		
 	}

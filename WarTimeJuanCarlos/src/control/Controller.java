@@ -9,8 +9,9 @@ import modelo.Soldado;
 import modelo.Tablero;
 import vista.info.EspecificacionSoldadosInfo;
 
-public class ComenzarController {
+public class Controller {
 	private Juego juego;
+	private Juego juego2;
 	// Desde el mismo momento en que toco el modelo tengo que hacer pruebas
 	public void poblarBatallon(List<EspecificacionSoldadosInfo> especificacion) {
 		assert especificacion != null;
@@ -21,21 +22,26 @@ public class ComenzarController {
 		}
 
 	}
+	public void realizarBatalla() {
+		juego.realizarBatalla();
+	}
+	
 	public boolean isLocalizarEstado() {
 		return juego.isLocalizarEstado();
 	}
 
-	public ComenzarController(int ancho,int alto) {
+	public Controller(int ancho,int alto) {
 		super();
-		juego = new Juego(ancho, alto);
+		juego = new JuegoComenzar(ancho, alto);
+		juego2 = new JuegoMover(juego);
 	}
 	
-	public boolean moverBatallon(Coordenada coordenada) {
-		return juego.moverBatallon(coordenada);
-	}
-	
-	public boolean localizar(Coordenada coordenada) {
-		return juego.localizarBatallon(coordenada);
+	public boolean poner(Coordenada coordenada) {
+		boolean poner = juego.poner(coordenada);
+		if(!juego.localizarEstado) {
+			juego=juego2;
+		}
+		return poner;
 	}
 
 	public String getError() {
@@ -61,8 +67,5 @@ public class ComenzarController {
 	}
 	public int getAlto() {
 		return juego.getAlto();
-	}
-	public boolean moverAdonde(Coordenada coordenada) {
-		return juego.moverAdonde(coordenada);
 	}
 }

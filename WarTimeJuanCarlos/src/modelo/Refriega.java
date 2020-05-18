@@ -18,33 +18,28 @@ public class Refriega {
 		while (!isAlguienSeveramenteHerido()) {
 			defensa = defensor.defender();
 			ataque = atacante.atacar();
-			infringir(defensor, ataque);
-			infringir(atacante, defensa);
+			defensor.infringir(ataque);
+			atacante.infringir(defensa);
 		}
 		finalizar();
 	}
 
 	private void finalizar() {
-		// TODO Auto-generated method stub
 		// aumentar experiencia de ambos
 		// la defensa del defensor
 		// en caso de victoria del atacante hay que
 		// aumentar el ataque del atacante
-		defensor.incrementarExperiencia();
-		atacante.incrementarExperiencia();
-		defensor.incrementarDefensa();
+		defensor.incrementarExperiencia(incrementoExperiencia);
+		atacante.incrementarExperiencia(incrementoExperiencia);
+		defensor.incrementarDefensa(incrementoDefensa);
 		if (isVencedorAtacante())
-			atacante.incrementaAtaque();
+			atacante.incrementaAtaque(incrementoAtaque);
 	}
 
 	private boolean isAlguienSeveramenteHerido() {
 		// TODO Auto-generated method stub
 		// Cuando tiene la mitad de la stamina que al comienzo de la refriega
 		return false;
-	}
-
-	private void infringir(Soldado soldado, float cantidad) {
-		// TODO Auto-generated method stub
 	}
 
 	public Soldado getVencedor() {

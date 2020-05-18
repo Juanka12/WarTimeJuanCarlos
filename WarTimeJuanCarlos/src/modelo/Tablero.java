@@ -43,4 +43,11 @@ public class Tablero {
 	public boolean borrar(Casilla casilla) {
 		return casillas.borrar(casilla);
 	}
+	public void conquistar(Batallon origen, Batallon destino) {
+		Coordenada clave = casillas.getClave(destino);
+		borrar(destino);
+		borrar(origen);
+		insertar(origen, clave);
+		
+	}
 }

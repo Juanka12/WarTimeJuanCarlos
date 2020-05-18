@@ -9,11 +9,21 @@ public class Ataque {
 		this.atacante = atacante;
 	}
 
+	public Batallon getDefensor() {
+		return defensor;
+	}
+
+	public Batallon getAtacante() {
+		return atacante;
+	}
+
 	public boolean combatir() {
 		//Porque estamos sacando a los soldados que esten por debajo de staminaCritica
 		Soldado defensorSoldado;
 		Soldado atacanteSoldado;
+		boolean response=false;
 		while (hayaSoldados()) {
+			response=true;
 			defensorSoldado = defensor.getSoldado();
 			atacanteSoldado = atacante.getSoldado();
 			Refriega refriega = new Refriega(defensorSoldado, atacanteSoldado);
@@ -21,9 +31,13 @@ public class Ataque {
 			defensor.tratarSoldado(defensorSoldado);
 			atacante.tratarSoldado(atacanteSoldado);
 		}
-		return atacante.haySoldados();
+		return response;
 	}
 
+	public boolean isAtacanteVencedor() {
+		return atacante.haySoldados();
+	}
+	
 	private boolean hayaSoldados() {
 		return defensor.haySoldados() && atacante.haySoldados();
 	}
